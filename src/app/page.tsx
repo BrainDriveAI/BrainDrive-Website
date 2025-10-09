@@ -8,8 +8,8 @@ export default function Home() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(120%_60%_at_50%_-20%,rgba(37,194,160,0.22),rgba(11,22,47,0.1))]" />
       <div className="absolute inset-x-0 top-0 -z-10 h-[420px] bg-[radial-gradient(80%_60%_at_50%_0%,rgba(53,120,229,0.35),rgba(11,22,47,0))]" />
 
-      <header className="relative border-b border-white/10 backdrop-blur-sm bg-black/10">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-6 px-6 py-8 sm:flex-row sm:items-center sm:justify-between">
+      <header className="relative border-b border-white/10 bg-[#111827]">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-3 px-6 py-3 sm:flex-row sm:items-center sm:justify-between">
           <Link
             href="/"
             className="flex items-center gap-4"
@@ -52,23 +52,31 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 pb-24 pt-16 sm:pt-24">
-        <section className="max-w-3xl space-y-8">
-          <span className="inline-flex items-center rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-[var(--color-accent-secondary)]">
-            Neural Native
-          </span>
+      <main className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 pb-24 pt-6 sm:pt-10">
+        <section className="flex flex-col items-center gap-6 text-center">
+          <div className="space-y-4">
+            <h1 className="text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
+              The Future of AI is Personal
+            </h1>
+            <p className="text-lg font-medium text-white/80 sm:text-xl">
+              You Should own it.
+            </p>
+          </div>
 
-          <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl md:text-6xl">
-            Build neural interfaces that feel effortless&mdash;from prototype to
-            production.
-          </h1>
-          <p className="text-lg leading-relaxed text-[var(--color-muted)] sm:text-xl">
-            BrainDrive helps you orchestrate brain-computer inputs, adaptive AI
-            models, and real-time safety controls so teams can ship cognitive
-            products with confidence.
-          </p>
+          <div className="flex w-full justify-center">
+            <div className="relative w-full max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-2 shadow-[0_20px_50px_rgba(14,35,65,0.35)]">
+              <Image
+                src="/hero-image.png"
+                alt="BrainDrive AI dashboard screenshot"
+                width={1536}
+                height={768}
+                className="h-auto w-full rounded-xl"
+                priority
+              />
+            </div>
+          </div>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="https://docs.braindrive.ai"
               target="_blank"
