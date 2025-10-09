@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -9,19 +10,20 @@ export default function Home() {
 
       <header className="relative border-b border-white/10 backdrop-blur-sm bg-black/10">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-6 px-6 py-8 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-lg font-semibold text-[var(--color-accent-secondary)]">
-              BD
-            </div>
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.4em] text-[var(--color-accent-secondary)]">
-                BrainDrive
-              </p>
-              <p className="text-lg font-semibold text-white">
-                Cognitive AI Accelerator
-              </p>
-            </div>
-          </div>
+          <Link
+            href="/"
+            className="flex items-center gap-4"
+            aria-label="BrainDrive home"
+          >
+            <Image
+              src="/braindrive-logo.png"
+              alt="BrainDrive"
+              width={220}
+              height={60}
+              priority
+              className="h-12 w-auto"
+            />
+          </Link>
 
           <nav className="flex gap-4 text-sm font-medium text-[var(--color-muted)]">
             <Link
