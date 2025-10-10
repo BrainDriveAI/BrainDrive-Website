@@ -25,7 +25,7 @@ export default function Home() {
             />
           </Link>
 
-          <nav className="flex items-center gap-6 text-base font-medium text-white/90 sm:h-full">
+          <nav className="nav-font flex items-center gap-6 text-base font-medium text-white/90 sm:h-full">
             <Link
               href="https://docs.braindrive.ai"
               className="transition hover:text-white"
@@ -48,7 +48,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 pb-24 pt-6 sm:pt-10">
+      <main className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 pb-24 pt-3 sm:pt-5">
         <section className="flex flex-col items-center gap-6 text-center">
           <div className="space-y-4">
             <h1 className="text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">

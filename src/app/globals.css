@@ -25,18 +25,17 @@ body {
   color: var(--foreground);
 }
 
-.docs-nav-font {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell,
-    "Noto Sans", sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
-
 .header-font {
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
 }
 
 .subheader-font {
+  font-family: var(--font-questrial), sans-serif;
+  font-weight: 400;
+}
+
+.nav-font {
   font-family: var(--font-questrial), sans-serif;
   font-weight: 400;
 }
