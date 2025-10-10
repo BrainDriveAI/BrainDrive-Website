@@ -2,6 +2,24 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
+  const heroFeatures = [
+    {
+      title: "Own",
+      body: "MIT Licensed & Self-Hosted",
+      icon: "/icons/own-icon.png",
+    },
+    {
+      title: "Customize",
+      body: "Modular & Permissionless",
+      icon: "/icons/customize-icon.png",
+    },
+    {
+      title: "Monetize",
+      body: "On Your Terms, not Big Tech's",
+      icon: "/icons/monetize-icon.png",
+    },
+  ];
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       <div className="absolute inset-0 -z-20 bg-[#0b162f]" />
@@ -99,30 +117,29 @@ export default function Home() {
         </section>
 
         <section className="mt-16 grid gap-6 md:grid-cols-3">
-          {[
-            {
-              title: "Composable SDKs",
-              body: "Use modular data pipelines, event routers, and guardrails tailored to neural signals.",
-            },
-            {
-              title: "Adaptive Intelligence",
-              body: "Blend on-device inference with cloud tuning and safety rules that adapt in real time.",
-            },
-            {
-              title: "Community Insights",
-              body: "Swap implementation patterns, security practices, and research with builders shipping today.",
-            },
-          ].map((item) => (
-            <article
+          {heroFeatures.map((item) => (
+            <Link
               key={item.title}
-              className="group rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition hover:border-[var(--color-accent-secondary)] hover:bg-white/[0.07]"
+              href="https://docs.braindrive.ai/core/how-to/use-braindrive"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col items-center rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center transition hover:border-[var(--color-accent-secondary)] hover:bg-white/[0.07]"
             >
-              <div className="mb-4 h-10 w-10 rounded-full bg-[var(--color-accent-soft)] transition group-hover:bg-[var(--color-accent-secondary)]/20" />
+              <div className="relative mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-[#050914] ring-1 ring-white/20 sm:h-24 sm:w-24">
+                <Image
+                  src={item.icon}
+                  alt={`${item.title} icon`}
+                  fill
+                  sizes="(min-width: 768px) 96px, 64px"
+                  className="scale-[1.75] object-cover sm:scale-[1.5]"
+                  style={{ objectPosition: "50% 46%" }}
+                />
+              </div>
               <h2 className="mb-3 text-xl font-semibold text-white">
                 {item.title}
               </h2>
               <p className="text-sm text-[var(--color-muted)]">{item.body}</p>
-            </article>
+            </Link>
           ))}
         </section>
 
@@ -130,18 +147,18 @@ export default function Home() {
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-xl space-y-2">
               <h2 className="text-2xl font-semibold text-white">
-                Stay in the loop
+                Free Guide to Local AI
               </h2>
               <p className="text-sm text-[var(--color-muted)]">
-                Subscribe to product updates and early release notes from the
-                BrainDrive engineering team.
+                Learn how to run your own AI system privately and securely on
+                your own computer.
               </p>
             </div>
             <Link
               href="mailto:hello@braindrive.ai?subject=BrainDrive%20Updates"
               className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
             >
-              Request updates
+              Get Your Free Guide
             </Link>
           </div>
         </section>
