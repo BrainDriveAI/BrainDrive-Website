@@ -31,6 +31,16 @@ body {
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+.header-font {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+}
+
+.subheader-font {
+  font-family: var(--font-questrial), sans-serif;
+  font-weight: 400;
+}
+
 @supports (font-feature-settings: "ss01") {
   body {
     font-feature-settings: "ss01", "cv11";

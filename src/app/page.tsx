@@ -8,7 +8,7 @@ export default function Home() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(120%_60%_at_50%_-20%,rgba(37,194,160,0.22),rgba(11,22,47,0.1))]" />
       <div className="absolute inset-x-0 top-0 -z-10 h-[420px] bg-[radial-gradient(80%_60%_at_50%_0%,rgba(53,120,229,0.35),rgba(11,22,47,0))]" />
 
-      <header className="relative border-b border-white/10 bg-[#111827] sm:h-[60px]">
+      <header className="header-font relative border-b border-white/10 bg-[#111827] sm:h-[60px]">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-3 px-6 py-3 sm:h-[60px] sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:py-0">
           <Link
             href="/"
@@ -25,7 +25,7 @@ export default function Home() {
             />
           </Link>
 
-          <nav className="docs-nav-font flex items-center gap-6 text-base font-medium text-white/90 sm:h-full">
+          <nav className="flex items-center gap-6 text-base font-medium text-white/90 sm:h-full">
             <Link
               href="https://docs.braindrive.ai"
               className="transition hover:text-white"
@@ -54,7 +54,7 @@ export default function Home() {
             <h1 className="text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
               Your AI. Your Rules.
             </h1>
-            <p className="text-lg font-medium text-white/80 sm:text-xl">
+            <p className="subheader-font text-lg font-medium text-white/80 sm:text-xl">
               BrainDrive is the user-owned alternative to Big Tech AI
             </p>
           </div>
@@ -74,12 +74,12 @@ export default function Home() {
 
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="https://docs.braindrive.ai"
+              href="https://docs.braindrive.ai/core/INSTALL"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[rgba(53,120,229,0.35)] transition hover:brightness-110"
             >
-              Explore the Docs
+              Install BrainDrive
               <span aria-hidden className="text-lg">
                 →
               </span>

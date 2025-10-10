@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Montserrat, Questrial } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,6 +12,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+  weight: ["700"],
+});
+
+const questrial = Questrial({
+  variable: "--font-questrial",
+  subsets: ["latin"],
+  weight: ["400"],
+});
 export const metadata: Metadata = {
   title: "BrainDrive | Cognitive AI Accelerator",
   description:
@@ -42,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[var(--background)] text-[var(--foreground)]`}
+        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${questrial.variable} antialiased bg-[var(--background)] text-[var(--foreground)]`}
       >
         {children}
       </body>
