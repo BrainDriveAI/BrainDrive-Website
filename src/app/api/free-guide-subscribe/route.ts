@@ -1,23 +1,23 @@
+'use server';
+
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
 
-const DATA_DIR = path.join(process.cwd(), "data");
-const SUBSCRIBERS_FILE = path.join(DATA_DIR, "free-guide-subscribers.json");
-
-async function ensureStore() {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-
-  try {
-    await fs.access(SUBSCRIBERS_FILE);
-  } catch {
-    await fs.writeFile(SUBSCRIBERS_FILE, "[]", "utf8");
-  }
-}
+// Set BREVO_API_KEY (required) and optionally BREVO_LIST_ID in your environment.
 
 export async function POST(request: Request) {
   try {
-    await ensureStore();
+    const brevoApiKey = process.env.BREVO_API_KEY;
+    const brevoListId = process.env.BREVO_LIST_ID;
+
+    if (!brevoApiKey) {
+      return NextResponse.json(
+        {
+          error:
+            "Email subscription temporarily unavailable. Please try again later.",
+        },
+        { status: 503 }
+      );
+    }
 
     const { email } = (await request.json().catch(() => ({}))) as {
       email?: string;
@@ -40,27 +40,45 @@ export async function POST(request: Request) {
       );
     }
 
-    const fileContent = await fs.readFile(SUBSCRIBERS_FILE, "utf8");
-    const subscribers: Array<{ email: string; subscribedAt: string }> =
-      JSON.parse(fileContent);
+    const payload: Record<string, unknown> = {
+      email: trimmedEmail,
+      updateEnabled: true,
+    };
 
-    const alreadySubscribed = subscribers.some(
-      (subscriber) => subscriber.email === trimmedEmail
-    );
+    if (brevoListId) {
+      const parsedListId = Number.parseInt(brevoListId, 10);
+      if (!Number.isNaN(parsedListId)) {
+        payload.listIds = [parsedListId];
+      }
+    }
 
-    if (!alreadySubscribed) {
-      subscribers.push({
-        email: trimmedEmail,
-        subscribedAt: new Date().toISOString(),
-      });
-      await fs.writeFile(
-        SUBSCRIBERS_FILE,
-        JSON.stringify(subscribers, null, 2),
-        "utf8"
+    const brevoResponse = await fetch("https://api.brevo.com/v3/contacts", {
+      method: "POST",
+      headers: {
+        "api-key": brevoApiKey,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!brevoResponse.ok) {
+      const data = await brevoResponse.json().catch(() => null);
+
+      // Brevo returns 400 with errorCode "duplicate_parameter" if the contact already exists.
+      const errorCode = data?.code ?? data?.errorCode;
+      if (brevoResponse.status === 400 && errorCode === "duplicate_parameter") {
+        return NextResponse.json({ success: true, duplicate: true });
+      }
+
+      throw new Error(
+        data?.message ||
+          data?.error ||
+          `Brevo responded with status ${brevoResponse.status}`
       );
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, duplicate: false });
   } catch (error) {
     console.error("Failed to store subscriber", error);
     return NextResponse.json(
