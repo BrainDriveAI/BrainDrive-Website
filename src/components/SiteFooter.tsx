@@ -34,9 +34,12 @@ export default function SiteFooter() {
             <br />
             Newark, DE 19713
           </address>
-          <p className="text-white/60">
-            © {new Date().getFullYear()} BrainDrive. All rights reserved.
-          </p>
+          <Link
+            href="mailto:info@braindrive.ai"
+            className="text-white/70 underline decoration-white/40 underline-offset-4 transition hover:text-white"
+          >
+            info@braindrive.ai
+          </Link>
         </div>
 
         <div className="text-base text-white/80">

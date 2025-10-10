@@ -23,9 +23,6 @@ export default function SiteHeader() {
           <Link href="https://community.braindrive.ai" className="transition hover:text-white">
             Community
           </Link>
-          <Link href="mailto:hello@braindrive.ai" className="transition hover:text-white">
-            Contact
-          </Link>
         </nav>
       </div>
     </header>
