@@ -28,16 +28,12 @@ export default function Home() {
           <nav className="docs-nav-font flex items-center gap-6 text-base font-medium text-white/90 sm:h-full">
             <Link
               href="https://docs.braindrive.ai"
-              target="_blank"
-              rel="noopener noreferrer"
               className="transition hover:text-white"
             >
               Docs
             </Link>
             <Link
               href="https://community.braindrive.ai"
-              target="_blank"
-              rel="noopener noreferrer"
               className="transition hover:text-white"
             >
               Community
