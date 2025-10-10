@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "BrainDrive | Cognitive AI Accelerator",
   description:
     "BrainDrive helps product teams turn brain-computer innovations into production-ready experiences.",
+  icons: {
+    icon: "/Icon-Logo-Dark-Mode.svg",
+  },
   openGraph: {
     title: "BrainDrive | Cognitive AI Accelerator",
     description:
