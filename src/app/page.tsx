@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
 export default function Home() {
@@ -56,8 +57,6 @@ export default function Home() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="https://docs.braindrive.ai/core/INSTALL"
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[rgba(53,120,229,0.35)] transition hover:brightness-110"
             >
               Install BrainDrive
@@ -67,8 +66,6 @@ export default function Home() {
             </Link>
             <Link
               href="https://community.braindrive.ai"
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:border-[var(--color-accent-secondary)] hover:text-[var(--color-accent-secondary)]"
             >
               Join the Community
@@ -84,8 +81,6 @@ export default function Home() {
             <Link
               key={item.title}
               href="https://docs.braindrive.ai/core/how-to/use-braindrive"
-              target="_blank"
-              rel="noopener noreferrer"
               className="group flex flex-col items-center rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center transition hover:border-[var(--color-accent-secondary)] hover:bg-white/[0.07]"
             >
               <div className="relative mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-[#050914] ring-1 ring-white/20 sm:h-24 sm:w-24">
@@ -127,51 +122,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="relative border-t border-white/10 bg-black/30 backdrop-blur-sm">
-        <div className="mx-auto grid w-full max-w-6xl gap-8 px-6 py-10 text-sm text-white/70 md:grid-cols-3 md:gap-12">
-          <nav className="space-y-3 text-base">
-            <Link
-              href="/"
-              className="block underline decoration-white/40 underline-offset-4 transition hover:text-white"
-            >
-              Home
-            </Link>
-            <Link
-              href="/trademark-policy"
-              className="block underline decoration-white/40 underline-offset-4 transition hover:text-white"
-            >
-              Trademark Policy
-            </Link>
-            <Link
-              href="/privacy-policy"
-              className="block underline decoration-white/40 underline-offset-4 transition hover:text-white"
-            >
-              Privacy Policy
-            </Link>
-          </nav>
-
-          <div className="space-y-2 text-base text-white">
-            <p className="font-semibold">BrainDrive, LLC</p>
-            <address className="not-italic leading-7 text-white/80">
-              131 Continental Dr.
-              <br />
-              Suite 305
-              <br />
-              Newark, DE 19713
-            </address>
-            <p className="text-white/60">
-              © {new Date().getFullYear()} BrainDrive. All rights reserved.
-            </p>
-          </div>
-
-          <div className="text-base text-white/80">
-            <p>
-              We&apos;re on a mission to build a superior, user-owned
-              alternative to Big Tech AI.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

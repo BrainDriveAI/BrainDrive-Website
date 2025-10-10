@@ -1,5 +1,6 @@
-import SiteHeader from "@/components/SiteHeader";
 import EmailCaptureForm from "@/components/EmailCaptureForm";
+import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
 
 export const metadata = {
   title: "Free Guide to Local AI | BrainDrive",
@@ -187,6 +188,7 @@ export default function FreeGuidePage() {
           </div>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }

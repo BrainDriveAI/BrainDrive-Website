@@ -1,3 +1,4 @@
+import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import Link from "next/link";
 
@@ -243,6 +244,7 @@ export default function TrademarkPolicy() {
           </section>
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }
