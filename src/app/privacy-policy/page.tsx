@@ -1,4 +1,3 @@
-import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
@@ -36,7 +35,7 @@ const sections = [
         "Give you access to BrainDrive community features",
         "Respond to support requests",
       ],
-      "You can unsubscribe any time using the link in our emails, or by emailing us at dwaring@braindrive.ai.",
+      "You can unsubscribe any time using the link in our emails, or by emailing us at info@braindrive.ai.",
     ],
   },
   {
@@ -61,7 +60,7 @@ const sections = [
     heading: "5. Data Retention",
     body: [
       "We keep your email address only as long as needed to provide the services you have requested.",
-      "If you leave the community or unsubscribe, we will delete your data upon request. To request deletion, email us at dwaring@braindrive.ai.",
+      "If you leave the community or unsubscribe, we will delete your data upon request. To request deletion, email us at info@braindrive.ai.",
     ],
   },
   {
@@ -95,7 +94,7 @@ const sections = [
     heading: "10. Contact Us",
     body: [
       "Got questions, concerns, or want your data deleted?",
-      "Email: dwaring@braindrive.ai",
+      "Email: info@braindrive.ai",
       "Address: BrainDrive LLC, 131 Continental Dr., Suite 305, Newark, DE 19713",
     ],
   },
@@ -172,17 +171,6 @@ export default function PrivacyPolicy() {
               privacy policy is more than legalese—it is philosophical.
             </p>
           </section>
-
-          <p className="text-sm text-white/60">
-            Looking for more details?{" "}
-            <Link
-              href="mailto:dwaring@braindrive.ai"
-              className="font-semibold text-[var(--color-accent)] hover:text-[var(--color-accent-secondary)]"
-            >
-              Email us
-            </Link>{" "}
-            and we will get back to you quickly.
-          </p>
         </div>
       </main>
       <SiteFooter />
