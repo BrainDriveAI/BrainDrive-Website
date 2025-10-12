@@ -160,7 +160,7 @@ export default function AboutPage() {
                   outside Big Tech than within it. Individuals will be far more
                   motivated to build, innovate, and connect on a platform they
                   own and control. This will allow us to drive more innovation
-                  and, as a result, a superior, open alternative to Big Tech's
+                  and, as a result, a superior, open alternative to Big Tech&apos;s
                   closed AI systems.
                 </p>
               </article>
@@ -203,7 +203,7 @@ export default function AboutPage() {
               To make it easy for anyone to build, control, and benefit from
               their own AI system. And to participate along with the rest of the
               open source community in building a superior, open alternative to
-              Big Tech's closed systems.
+              Big Tech&apos;s closed systems.
             </p>
           </section>
 
