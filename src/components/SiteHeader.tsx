@@ -49,6 +49,9 @@ export default function SiteHeader() {
           id="primary-nav"
           className={`nav-font ${isMenuOpen ? "flex bg-[#0f172a] shadow-lg" : "hidden"} absolute left-0 right-0 top-full z-50 flex-col gap-3 border-t border-white/10 px-6 pb-4 pt-3 text-base font-medium text-white/90 sm:static sm:flex sm:h-full sm:flex-row sm:items-center sm:gap-6 sm:border-t-0 sm:bg-transparent sm:px-0 sm:py-0 sm:shadow-none`}
         >
+          <Link href="/about" className="transition hover:text-white" onClick={closeMenu}>
+            About
+          </Link>
           <Link href="https://docs.braindrive.ai" className="transition hover:text-white" onClick={closeMenu}>
             Docs
           </Link>
