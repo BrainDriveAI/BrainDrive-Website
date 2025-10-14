@@ -66,11 +66,11 @@ export default function Home() {
               </span>
             </Link>
             <Link
-              href="https://community.braindrive.ai"
+              href="https://docs.braindrive.ai/core/how-to/use-braindrive"
               target="_self"
               className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:border-[var(--color-accent-secondary)] hover:text-[var(--color-accent-secondary)]"
             >
-              Join the Community
+              Owner&apos;s Manual
               <span aria-hidden className="text-lg">
                 ↗
               </span>
