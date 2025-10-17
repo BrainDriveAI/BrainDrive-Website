@@ -1,71 +1,120 @@
-import EmailCaptureForm from "@/components/EmailCaptureForm";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
 export const metadata = {
-  title: "Free Guide to Local AI | BrainDrive",
+  title: "How to Run AI On Your Own Computer | BrainDrive",
   description:
-    "Download BrainDrive's free guide to running AI 100% locally. Learn hardware requirements, model selection, customization, and more.",
+    "Get the BrainDrive ebook that teaches beginners how to install, own, and customize a private AI system that lives on their computer.",
 };
 
-const learnTopics = [
-  "What local AI is (and why it beats hosted AI for privacy, control, and cost)",
-  "The three main components every local AI system needs",
-  "Hardware requirements explained in plain English",
-  "Where to find, download, and run your first local AI model",
-  "How to work with local models from the command line and friendly interfaces like BrainDrive",
-  "Ways to customize models with system prompts, temperature, plugins, and agents",
-  "How to discover, fine-tune, and share models from Hugging Face",
-  "Communities and resources that keep you learning long after the guide",
+const highlights = [
+  "Spin up a BrainDrive that looks like ChatGPT without surrendering your data.",
+  "Download open-source models with Ollama and chat entirely offline whenever you choose.",
+  "Use personas, custom pages, and plugins to tailor BrainDrive to your workflows.",
+  "Decide when (and when not) to connect hosted models through APIs on your terms.",
 ];
 
 const reasons = [
   {
-    title: "Privacy First",
-    body: "Keep prompts, documents, and personal data on your machine—no surveillance, no vendor lock-in.",
+    title: "Own It All",
+    body: "BrainDrive runs on hardware you control. Prompts, documents, and chat history never leave your machine.",
   },
   {
-    title: "Total Control",
-    body: "Choose the models, interfaces, and plugins you want. Change them anytime without waiting on Big Tech.",
+    title: "Ditch the Fees",
+    body: "Stop renting access from platforms that raise prices and rewrite policies. BrainDrive is MIT licensed and free.",
   },
   {
-    title: "Practical and Accessible",
-    body: "Step-by-step walkthroughs, real-world hardware advice, and zero jargon so anyone can get started quickly.",
+    title: "Beginner Friendly",
+    body: "Plain-English explanations, humor, and zero jargon. The entire setup clocks in at about 20 minutes.",
   },
 ];
 
-const modules = [
+const ownershipComponents = [
   {
-    title: "Local AI Foundations",
-    bullets: [
-      "What “local AI” really means and how it differs from hosted tools",
-      "Understanding AI model sizes, parameters, and quantization",
-      "Assessing your hardware (CPU, RAM, GPU, storage) in minutes",
-    ],
+    title: "The Interface",
+    description:
+      "BrainDrive ships with a beautiful, open-source chat UI that you own outright. No one can monitor or revoke it.",
   },
   {
-    title: "Hands-On Setup",
-    bullets: [
-      "Choosing your first model with Ollama",
-      "Downloading and running a model in the terminal",
-      "Unplug-the-internet moment: prove you are 100% offline",
-    ],
+    title: "The Intelligence",
+    description:
+      "Download open-source models like Gemma or Llama to your computer. Connect cloud APIs only when you decide.",
   },
   {
-    title: "Customize & Extend",
-    bullets: [
-      "Give your AI a role using system prompts and temperature",
-      "Expand the context window for long-form workflows",
-      "Use BrainDrive and other UIs to go beyond the command line",
-    ],
+    title: "The Memory",
+    description:
+      "Your conversation history lives locally. Upcoming RAG features keep documents and knowledge grounded on your machine.",
   },
   {
-    title: "Advanced Exploration",
-    bullets: [
-      "Discover specialized models on Hugging Face",
-      "Fine-tune models for your own use cases",
-      "Tap into local AI communities and future-proof your skills",
-    ],
+    title: "The Hosting",
+    description:
+      "Run BrainDrive on a laptop, desktop, or private cloud. You pick the environment and who can access it.",
+  },
+  {
+    title: "The Connections",
+    description:
+      "Model Context Protocol integrations make it easy to link BrainDrive with Gmail, accounting tools, and more—without giving away control.",
+  },
+];
+
+const essentials = [
+  "Laptop or desktop (Mac, Windows, or Linux)",
+  "At least 8GB of RAM",
+  "10-20GB of free storage space",
+  "20 minutes to follow along",
+  "No technical experience required",
+];
+
+const steps = [
+  {
+    title: "Download and install BrainDrive",
+    description:
+      "Visit BrainDrive.ai, choose your operating system, and run the installer. The app opens in your browser automatically.",
+  },
+  {
+    title: "Create your local login",
+    description:
+      "Sign up on http://localhost:5173 and keep your Wi-Fi off if you want proof everything stays on your device.",
+  },
+  {
+    title: "Install Ollama",
+    description:
+      "Grab Ollama to manage open-source AI models without the command line. It is free and runs locally.",
+  },
+  {
+    title: "Pull your first model",
+    description:
+      "Open the BrainDrive settings, pick Gemma:1B (or another starter model), and click install while you grab a coffee.",
+  },
+  {
+    title: "Celebrate with an offline chat",
+    description:
+      "Visit the AI Chat page, ask for a joke, and watch your new AI reply without Big Tech watching over your shoulder.",
+  },
+  {
+    title: "Create a persona",
+    description:
+      "Use the Persona builder to wrap system prompts in a friendly UI. Start with a pirate persona to see how tone control works.",
+  },
+  {
+    title: "Build a custom page",
+    description:
+      "Drag-and-drop the AI Chat Interface inside Page Builder to create dedicated workspaces for email rewrites, poetry, research, and more.",
+  },
+  {
+    title: "Optionally connect API models",
+    description:
+      "Blend in GPT-4, Claude, or Gemini via API keys when you want maximum horsepower while still steering the experience.",
+  },
+  {
+    title: "Show off your new superpower",
+    description:
+      "Call a friend and let them know you run your own AI stack. Enjoy the bragging rights—your secret is safe with us.",
+  },
+  {
+    title: "Join the BrainDrive community",
+    description:
+      "Hop into community.braindrive.ai for Q&A, new plugins, and fellow owners who are building the future together.",
   },
 ];
 
@@ -79,42 +128,46 @@ export default function FreeGuidePage() {
       <SiteHeader />
 
       <main className="relative mx-auto flex w-full max-w-6xl flex-col px-6 pb-24 pt-12 sm:pt-20">
-        <section className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <section className="space-y-8 lg:space-y-10">
           <div className="space-y-6 text-white">
             <p className="text-sm uppercase tracking-[0.35em] text-[var(--color-accent-secondary)]">
               Free Download
             </p>
             <h1 className="header-font text-4xl font-bold leading-tight sm:text-5xl">
-              Free Guide to Local AI
+              How to Run AI On Your Own Computer Privately and for Free
             </h1>
             <p className="subheader-font text-lg text-white/80 sm:text-xl">
-              Learn how to run your own AI system privately and securely—no
-              technical expertise required.
+              Dave Waring, BrainDrive co-creator, guides you from the very first
+              download to owning a fully private AI system in under 20 minutes.
             </p>
             <p className="text-base text-white/70">
-              This field-tested guide walks you through the exact steps to pick
-              the right hardware, download your first model, run it locally,
-              customize it for your workflow, and keep improving with the wider
-              ecosystem. It is everything we wish existed when we started.
+              Host it yourself. Keep your conversations private. Pay nothing in
+              monthly fees. This beginner-friendly ebook shows exactly how to
+              install BrainDrive, run open-source models with Ollama, customize
+              the interface, and stay in complete control of your data.
             </p>
-
-            <div className="space-y-3 rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-white/80">
-              <h2 className="text-lg font-semibold text-white">
-                Inside the guide, you will learn:
-              </h2>
-              <ul className="grid gap-2 text-sm text-white/80 sm:grid-cols-2">
-                {learnTopics.map((topic) => (
-                  <li key={topic} className="flex items-start gap-2">
-                    <span className="mt-1 inline-flex h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--color-accent-secondary)]" />
-                    <span>{topic}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-8 shadow-[0_20px_45px_rgba(8,18,36,0.45)] backdrop-blur">
-            <EmailCaptureForm />
+          <div className="relative rounded-3xl border border-white/10 bg-white/[0.05] p-6 shadow-[0_20px_45px_rgba(8,18,36,0.45)] backdrop-blur sm:p-8">
+            <div id="cbox-BiSx2ij5EY4iMg6A" />
+          </div>
+        </section>
+
+        <section className="mt-14">
+          <div className="space-y-4 rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-white/80 sm:p-8">
+            <h2 className="text-lg font-semibold text-white">Inside you will:</h2>
+            <ul className="grid gap-2 text-sm text-white/80 sm:grid-cols-2">
+              {highlights.map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span className="mt-1 inline-flex h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--color-accent-secondary)]" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
+              &ldquo;We built BrainDrive so regular people could own AI, not rent it
+              from Big Tech. This guide gives you the keys.&rdquo; — Dave Waring
+            </div>
           </div>
         </section>
 
@@ -132,59 +185,95 @@ export default function FreeGuidePage() {
           ))}
         </section>
 
-        <section className="mt-20 space-y-10">
-          <div className="max-w-3xl space-y-4 text-white">
-            <h2 className="header-font text-3xl font-semibold sm:text-4xl">
-              What you will build as you go
-            </h2>
-            <p className="text-base text-white/75">
-              By the time you finish the guide you will have a private AI
-              assistant running on your machine, tuned to your needs, and ready
-              to grow alongside your projects. Each chapter layers on the next
-              so you stay in control at every step.
-            </p>
+        <section className="mt-20 space-y-12">
+          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+            <div className="space-y-4 text-white">
+              <h2 className="header-font text-3xl font-semibold sm:text-4xl">
+                Why own your AI system?
+              </h2>
+              <p className="text-base text-white/75">
+                Hosted AI platforms log every prompt, sell access back to you,
+                and can change the rules overnight. BrainDrive flips the script
+                so you own the interface, the models, the memory, the hosting,
+                and the integrations.
+              </p>
+              <p className="text-base text-white/75">
+                The guide explains how Big Tech uses your conversations, why the
+                open-source community now beats walled gardens, and how to bring
+                that power home without becoming a systems engineer.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-white">
+              <h3 className="mb-4 text-lg font-semibold text-white">
+                The five components BrainDrive hands back to you:
+              </h3>
+              <ul className="space-y-4 text-sm text-white/75">
+                {ownershipComponents.map((component) => (
+                  <li key={component.title} className="flex flex-col gap-1">
+                    <span className="font-semibold text-white">
+                      {component.title}
+                    </span>
+                    <span>{component.description}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            {modules.map((module) => (
-              <div
-                key={module.title}
-                className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-white"
-              >
-                <h3 className="mb-3 text-lg font-semibold text-white">
-                  {module.title}
-                </h3>
-                <ul className="space-y-2 text-sm text-white/75">
-                  {module.bullets.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1 inline-flex h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--color-accent)]" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className="grid gap-6 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-white">
+              <h3 className="mb-4 text-lg font-semibold text-white">
+                What you need before you start
+              </h3>
+              <ul className="space-y-3 text-sm text-white/75">
+                {essentials.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="mt-1 inline-flex h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--color-accent)]" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-white">
+              <h3 className="mb-4 text-lg font-semibold text-white">
+                Get it running in 10 easy steps
+              </h3>
+              <ol className="space-y-4 text-sm text-white/75">
+                {steps.map((step, index) => (
+                  <li key={step.title} className="flex gap-3">
+                    <span className="mt-0.5 inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[var(--color-accent-secondary)] text-xs font-semibold text-[#0b162f]">
+                      {index + 1}
+                    </span>
+                    <div className="space-y-1">
+                      <p className="font-semibold text-white">{step.title}</p>
+                      <p>{step.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
         </section>
 
         <section className="mt-20 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-4 text-white">
             <h2 className="header-font text-3xl font-semibold sm:text-4xl">
-              Take back control of AI
+              Ready to own your AI?
             </h2>
             <p className="text-base text-white/75">
-              Stop renting access to someone else&apos;s AI. With local AI you
-              own the models, the data, and the outcomes. This guide shows you
-              how to do it safely, efficiently, and without guesswork.
+              When you finish the guide you will have a private AI assistant
+              running locally, tuned to your needs, and free from monthly plans
+              or data mining.
             </p>
             <p className="text-base text-white/75">
-              Ready to get started? Drop your email and we will send the guide
-              straight to your inbox along with occasional BrainDrive updates.
-              No spam, ever.
+              Drop your email and we will send the ebook straight to your inbox,
+              along with occasional BrainDrive updates on new plugins, memory
+              upgrades, and community events. No spam—only tools that keep you
+              in control.
             </p>
           </div>
           <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-8 shadow-[0_20px_45px_rgba(8,18,36,0.45)] backdrop-blur">
-            <EmailCaptureForm compact />
+            <div id="cbox-BiSx2ij5EY4iMg6A" />
           </div>
         </section>
       </main>
