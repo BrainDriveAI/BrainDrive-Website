@@ -129,6 +129,10 @@ export default function FreeGuidePage() {
 
       <main className="relative mx-auto flex w-full max-w-6xl flex-col px-6 pb-24 pt-12 sm:pt-20">
         <section className="space-y-8 lg:space-y-10">
+          <div className="relative rounded-3xl border border-white/10 bg-white/[0.05] p-6 shadow-[0_20px_45px_rgba(8,18,36,0.45)] backdrop-blur sm:p-8">
+            <div id="cbox-BiSx2ij5EY4iMg6A" />
+          </div>
+
           <div className="space-y-6 text-white">
             <p className="text-sm uppercase tracking-[0.35em] text-[var(--color-accent-secondary)]">
               Free Download
@@ -146,10 +150,6 @@ export default function FreeGuidePage() {
               install BrainDrive, run open-source models with Ollama, customize
               the interface, and stay in complete control of your data.
             </p>
-          </div>
-
-          <div className="relative rounded-3xl border border-white/10 bg-white/[0.05] p-6 shadow-[0_20px_45px_rgba(8,18,36,0.45)] backdrop-blur sm:p-8">
-            <div id="cbox-BiSx2ij5EY4iMg6A" />
           </div>
         </section>
 
