@@ -1,5 +1,6 @@
-import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import ConvertBoxInlineLoader from "@/components/ConvertBoxInlineLoader";
 
 export const metadata = {
   title: "How to Run AI On Your Own Computer | BrainDrive",
@@ -50,6 +51,7 @@ export default function FreeGuidePage() {
         <section className="space-y-8 lg:space-y-10">
           <div className="relative rounded-3xl border border-white/10 bg-white/[0.05] p-6 shadow-[0_20px_45px_rgba(8,18,36,0.45)] backdrop-blur sm:p-8">
             <div id="cbox-BiSx2ij5EY4iMg6A" />
+            <ConvertBoxInlineLoader targetId="cbox-BiSx2ij5EY4iMg6A" />
           </div>
 
           <div className="space-y-6 text-white">
