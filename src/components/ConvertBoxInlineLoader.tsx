@@ -2,6 +2,22 @@
 
 import { useEffect } from "react";
 
+type ConvertBoxState = {
+  boxes: unknown[];
+  areasInUse?: unknown[];
+};
+
+type ConvertBoxStore = {
+  state: ConvertBoxState;
+  commit: (mutation: string, payload: unknown) => void;
+};
+
+type ConvertBoxRoot = {
+  fetchBoxes: () => unknown;
+  $store?: ConvertBoxStore;
+  $nextTick?: (callback: () => void) => void;
+};
+
 type ConvertBoxInlineLoaderProps = {
   targetId: string;
   retryCount?: number;
@@ -47,7 +63,7 @@ export default function ConvertBoxInlineLoader({
 
     observer.observe(target, { childList: true });
 
-    const findConvertBoxRoot = () => {
+    const findConvertBoxRoot = (): ConvertBoxRoot | null => {
       const bodyChildren = Array.from(document.body.children);
       for (const element of bodyChildren) {
         const vueKey = Object.keys(element).find((key) =>
@@ -64,10 +80,28 @@ export default function ConvertBoxInlineLoader({
           "fetchBoxes" in instance &&
           typeof (instance as { fetchBoxes: unknown }).fetchBoxes === "function"
         ) {
-          return instance as { fetchBoxes: () => unknown };
+          return instance as ConvertBoxRoot;
         }
       }
       return null;
+    };
+
+    const resetBoxes = (root: ConvertBoxRoot) => {
+      if (!root.$store || typeof root.$store.commit !== "function") {
+        return;
+      }
+      try {
+        root.$store.commit("setBoxes", []);
+        const { state } = root.$store;
+        if (state && typeof state === "object") {
+          const typedState = state as ConvertBoxState;
+          if (Array.isArray(typedState.areasInUse)) {
+            typedState.areasInUse.length = 0;
+          }
+        }
+      } catch {
+        // ignore – best effort
+      }
     };
 
     const triggerReload = () => {
@@ -80,8 +114,13 @@ export default function ConvertBoxInlineLoader({
         return false;
       }
 
-      try {
-        const result = root.fetchBoxes();
+      const runFetch = () => {
+        let result: unknown;
+        try {
+          result = root.fetchBoxes();
+        } catch {
+          return;
+        }
         if (
           result &&
           typeof result === "object" &&
@@ -92,8 +131,17 @@ export default function ConvertBoxInlineLoader({
             /* swallow */
           });
         }
+      };
+
+      try {
+        resetBoxes(root);
+        if (typeof root.$nextTick === "function") {
+          root.$nextTick(runFetch);
+        } else {
+          runFetch();
+        }
       } catch {
-        // ignore errors – we retry shortly
+        // ignore – retry will handle failures
       }
 
       return false;
