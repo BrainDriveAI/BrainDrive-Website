@@ -37,7 +37,7 @@ export default function Home() {
               Your AI. Your Rules.
             </h1>
             <p className="subheader-font text-lg font-medium text-white/80 sm:text-xl">
-              BrainDrive is the user-owned alternative to Big Tech AI
+              BrainDrive is your user-owned alternative to Big Tech AI
             </p>
           </div>
 
