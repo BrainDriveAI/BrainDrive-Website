@@ -25,24 +25,24 @@ const questrial = Questrial({
   weight: ["400"],
 });
 export const metadata: Metadata = {
-  title: "BrainDrive | Cognitive AI Accelerator",
+  title: "BrainDrive | Your AI. Your Rules.",
   description:
-    "BrainDrive helps product teams turn brain-computer innovations into production-ready experiences.",
+    "BrainDrive is the open source, user-owned alternative to Big Tech AI systems that's easy to own, customize, and monetize.",
   icons: {
     icon: "/Icon-Logo-Dark-Mode.svg",
   },
   openGraph: {
-    title: "BrainDrive | Cognitive AI Accelerator",
+    title: "BrainDrive | Your AI. Your Rules.",
     description:
-      "Explore BrainDrive, connect with the community, and dive into technical docs.",
+      "BrainDrive is the open source, user-owned alternative to Big Tech AI systems that's easy to own, customize, and monetize.",
     url: "https://braindrive.ai",
     siteName: "BrainDrive",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BrainDrive | Cognitive AI Accelerator",
+    title: "BrainDrive | Your AI. Your Rules.",
     description:
-      "Explore BrainDrive, connect with the community, and dive into technical docs.",
+      "BrainDrive is the open source, user-owned alternative to Big Tech AI systems that's easy to own, customize, and monetize.",
   },
 };
 
