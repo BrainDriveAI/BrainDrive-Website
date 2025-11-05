@@ -56,8 +56,7 @@ export default function Home() {
 
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="https://docs.braindrive.ai/core/INSTALL"
-              target="_self"
+              href="/install"
               className="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[rgba(53,120,229,0.35)] transition hover:brightness-110"
             >
               Install BrainDrive
