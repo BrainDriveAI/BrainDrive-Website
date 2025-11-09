@@ -1,6 +1,6 @@
 'use client';
 
-import type { SVGProps } from "react";
+import type { ReactElement, SVGProps } from "react";
 import { useState } from "react";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -15,7 +15,7 @@ type OsOption = {
   ctaLabel: string;
   ctaHref: string;
   requirement: string;
-  icon: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+  icon: (props: SVGProps<SVGSVGElement>) => ReactElement;
   openInNewTab?: boolean;
 };
 
