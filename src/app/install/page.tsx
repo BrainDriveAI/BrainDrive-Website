@@ -14,7 +14,6 @@ type OsOption = {
   name: string;
   ctaLabel: string;
   ctaHref: string;
-  requirement: string;
   icon: (props: SVGProps<SVGSVGElement>) => ReactElement;
   openInNewTab?: boolean;
 };
@@ -25,7 +24,6 @@ const osOptions: OsOption[] = [
     name: "macOS",
     ctaLabel: "Download for macOS",
     ctaHref: macInstallerLink,
-    requirement: "Requires macOS 13 Ventura or later",
     icon: (props) => (
       <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
         <path
@@ -40,7 +38,6 @@ const osOptions: OsOption[] = [
     name: "Linux",
     ctaLabel: "Open Linux install guide",
     ctaHref: linuxInstallGuideUrl,
-    requirement: "Opens docs.braindrive.ai",
     icon: (props) => (
       <svg viewBox="0 0 64 64" aria-hidden="true" {...props}>
         <g fill="none" fillRule="evenodd">
@@ -88,9 +85,8 @@ const osOptions: OsOption[] = [
   {
     id: "windows",
     name: "Windows",
-    ctaLabel: "Download for Windows",
+    ctaLabel: "Download for Windows 11",
     ctaHref: windowsInstallerLink,
-    requirement: "Requires Windows 10 21H2 or later",
     icon: (props) => (
       <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
         <path
@@ -162,48 +158,10 @@ export default function InstallPage() {
               >
                 {selectedOption.ctaLabel}
               </a>
-              <span className="text-sm text-white/70">
-                {selectedOption.requirement}
-              </span>
             </div>
           </div>
         </section>
 
-        <section>
-          <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-8 shadow-[0_20px_50px_rgba(5,10,25,0.45)]">
-            <h2 className="text-2xl font-semibold text-white">
-              System requirements
-            </h2>
-            <p className="mt-3 text-sm text-white/70">
-              Replace the placeholder copy below once OS support and hardware
-              minimums are confirmed.
-            </p>
-            <div className="mt-6 grid gap-6 md:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-                <h3 className="text-lg font-semibold text-white">macOS</h3>
-                <ul className="mt-4 space-y-2 text-sm text-white/80">
-                  <li>• macOS version: TODO (e.g., Monterey 12.6+)</li>
-                  <li>• Architecture: TODO (Apple Silicon? Intel?)</li>
-                  <li>• Disk space: TODO MB free</li>
-                  <li>• Network: HTTPS to *.braindrive.ai ports (confirm)</li>
-                  <li>• Permissions: Admin rights? (confirm)</li>
-                </ul>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-                <h3 className="text-lg font-semibold text-white">
-                  Windows
-                </h3>
-                <ul className="mt-4 space-y-2 text-sm text-white/80">
-                  <li>• Windows version: TODO (e.g., 10 21H2+)</li>
-                  <li>• Architecture: TODO (x64? ARM? confirm)</li>
-                  <li>• Disk space: TODO MB free</li>
-                  <li>• Network: HTTPS to *.braindrive.ai ports (confirm)</li>
-                  <li>• Permissions: Needs admin during install? (confirm)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
 
       <SiteFooter />
