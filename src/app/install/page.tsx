@@ -6,7 +6,8 @@ import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
 const macInstallerLink = "#TODO_ADD_MAC_INSTALLER_URL";
-const windowsInstallerLink = "#TODO_ADD_WINDOWS_INSTALLER_URL";
+const windowsInstallerLink =
+  "https://github.com/BrainDriveAI/BrainDrive-Install-System/releases/latest/download/BrainDriveInstaller-win-x64.exe";
 const linuxInstallGuideUrl = "https://docs.braindrive.ai/core/INSTALL";
 
 type OsOption = {
