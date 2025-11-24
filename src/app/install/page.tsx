@@ -21,10 +21,24 @@ type OsOption = {
 
 const osOptions: OsOption[] = [
   {
+    id: "windows",
+    name: "Windows",
+    ctaLabel: "Download for Windows 11",
+    ctaHref: windowsInstallerLink,
+    icon: (props) => (
+      <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
+        <path
+          d="M3 4.5 11 3v7H3zm0 8H11v7L3 18zm10-9 8-1.4v8.9h-8zm0 9.4h8V22L13 20.6Z"
+          className="fill-current"
+        />
+      </svg>
+    ),
+  },
+  {
     id: "mac",
     name: "macOS",
-    ctaLabel: "Download for macOS",
-    ctaHref: macInstallerLink,
+    ctaLabel: "Open Mac Install Guide",
+    ctaHref: linuxInstallGuideUrl,
     icon: (props) => (
       <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
         <path
@@ -33,6 +47,7 @@ const osOptions: OsOption[] = [
         />
       </svg>
     ),
+    openInNewTab: true,
   },
   {
     id: "linux",
@@ -82,20 +97,6 @@ const osOptions: OsOption[] = [
       </svg>
     ),
     openInNewTab: true,
-  },
-  {
-    id: "windows",
-    name: "Windows",
-    ctaLabel: "Download for Windows 11",
-    ctaHref: windowsInstallerLink,
-    icon: (props) => (
-      <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
-        <path
-          d="M3 4.5 11 3v7H3zm0 8H11v7L3 18zm10-9 8-1.4v8.9h-8zm0 9.4h8V22L13 20.6Z"
-          className="fill-current"
-        />
-      </svg>
-    ),
   },
 ];
 
