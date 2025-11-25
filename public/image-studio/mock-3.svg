@@ -1,0 +1,26 @@
+<svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A152A"/>
+      <stop offset="100%" stop-color="#050914"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#325D87"/>
+      <stop offset="100%" stop-color="#7CA7D1"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg3)"/>
+  <rect x="90" y="120" width="320" height="120" rx="22" fill="#111F39" stroke="#325D87" stroke-opacity="0.6"/>
+  <rect x="430" y="120" width="160" height="120" rx="22" fill="#111F39" stroke="#325D87" stroke-opacity="0.6"/>
+  <rect x="640" y="120" width="200" height="220" rx="28" fill="#0E1C35" stroke="#7CA7D1" stroke-opacity="0.55"/>
+  <rect x="130" y="170" width="240" height="30" rx="12" fill="url(#beam)" opacity="0.9"/>
+  <rect x="460" y="170" width="100" height="30" rx="12" fill="#7CA7D1" opacity="0.7"/>
+  <rect x="680" y="170" width="120" height="32" rx="14" fill="#1E2A3B" stroke="#325D87" stroke-opacity="0.7"/>
+  <rect x="680" y="230" width="140" height="32" rx="14" fill="#122238" stroke="#7CA7D1" stroke-opacity="0.7"/>
+  <rect x="680" y="290" width="100" height="32" rx="14" fill="#14243D" stroke="#325D87" stroke-opacity="0.7"/>
+  <circle cx="260" cy="330" r="90" fill="#0E1B30" stroke="#7CA7D1" stroke-opacity="0.45" stroke-width="4"/>
+  <circle cx="260" cy="330" r="46" fill="#325D87" opacity="0.65"/>
+  <path d="M240 330 L272 310 L272 350 Z" fill="#C5DAED"/>
+  <text x="110" y="440" fill="#C5DAED" font-family="Montserrat, Arial, sans-serif" font-size="28" font-weight="700">BrainDrive Guide ready area</text>
+  <text x="110" y="470" fill="#9DB7D5" font-family="Geist, Arial, sans-serif" font-size="18">Leave space for characters or keep abstract depending on the toggle.</text>
+</svg>

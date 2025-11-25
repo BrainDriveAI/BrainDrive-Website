@@ -1,0 +1,25 @@
+<svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A152A"/>
+      <stop offset="100%" stop-color="#03050A"/>
+    </linearGradient>
+    <linearGradient id="accent1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#325D87"/>
+      <stop offset="100%" stop-color="#7CA7D1"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg1)"/>
+  <rect x="70" y="110" width="400" height="240" rx="28" fill="#0F1F3A" stroke="#7CA7D1" stroke-opacity="0.45"/>
+  <rect x="120" y="160" width="220" height="60" rx="16" fill="url(#accent1)" opacity="0.85"/>
+  <rect x="120" y="240" width="180" height="40" rx="12" fill="#1E2A3B" stroke="#325D87" stroke-opacity="0.8"/>
+  <circle cx="520" cy="200" r="70" fill="#1E2A3B" stroke="#325D87" stroke-width="3"/>
+  <circle cx="520" cy="200" r="38" fill="#7CA7D1" opacity="0.55"/>
+  <path d="M650 150L820 110L820 380L650 340Z" fill="#10233C" stroke="#7CA7D1" stroke-opacity="0.4"/>
+  <rect x="610" y="280" width="200" height="120" rx="26" fill="#0F1F3A" stroke="#325D87" stroke-opacity="0.6"/>
+  <circle cx="672" cy="340" r="18" fill="#7CA7D1" opacity="0.7"/>
+  <circle cx="732" cy="340" r="26" fill="#325D87" opacity="0.65"/>
+  <circle cx="792" cy="340" r="18" fill="#7CA7D1" opacity="0.7"/>
+  <text x="90" y="360" fill="#C5DAED" font-family="Montserrat, Arial, sans-serif" font-size="28" font-weight="700">BrainDrive Image Studio</text>
+  <text x="90" y="395" fill="#9DB7D5" font-family="Geist, Arial, sans-serif" font-size="18">Metaphor-first, dark mode, space for headlines.</text>
+</svg>
