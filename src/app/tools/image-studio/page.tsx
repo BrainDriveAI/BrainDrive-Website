@@ -262,178 +262,140 @@ export default function ImageStudioPage() {
           </div>
         </header>
 
-        <div className="grid gap-6 lg:grid-cols-[1.15fr_1fr]">
-          <div className="space-y-5">
-            <SectionCard
-              title="Describe the image"
-              subtitle="Give us the rough idea. The brand guardrails and composition hints are added automatically."
-            >
-              <div className="flex flex-col gap-4">
-                <label className="text-sm font-medium text-white/80">
-                  Rough concept
-                  <textarea
-                    value={concept}
-                    onChange={(e) => setConcept(e.target.value)}
-                    className="mt-2 w-full rounded-2xl border border-white/10 bg-[#0b162f]/70 px-4 py-3 text-sm text-white shadow-inner shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] focus:border-[var(--color-accent)] focus:outline-none"
-                    rows={4}
-                    placeholder="e.g. blog hero about freedom vs big tech ai, side-by-side comparison"
-                  />
-                </label>
-
-                <div className="grid gap-3 md:grid-cols-2">
-                  <label className="flex flex-col text-sm font-medium text-white/80">
-                    Use case
-                    <select
-                      value={useCase}
-                      onChange={(e) =>
-                        setUseCase(e.target.value as BrainImageUseCase)
-                      }
-                      className="mt-2 w-full rounded-xl border border-white/10 bg-[#0b162f]/70 px-3 py-2 text-sm text-white focus:border-[var(--color-accent)] focus:outline-none"
-                    >
-                      {useCaseOptions.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="mt-1 text-xs text-white/60">
-                      {
-                        useCaseOptions.find((option) => option.value === useCase)
-                          ?.description
-                      }
-                    </span>
-                  </label>
-
-                  <label className="flex min-h-[92px] items-center justify-between gap-4 rounded-xl border border-white/10 bg-[#0b162f]/70 px-4 py-4 text-sm font-medium text-white/80">
-                    <span className="leading-snug">
-                      Include BrainDrive Guide character
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setIncludeCharacter((prev) => !prev)}
-                      className={`flex h-9 w-16 items-center rounded-full border border-white/10 px-1 transition ${
-                        includeCharacter
-                          ? "bg-[var(--color-accent)]"
-                          : "bg-white/10"
-                      }`}
-                      aria-pressed={includeCharacter}
-                    >
-                      <span
-                        className={`inline-block h-7 w-7 rounded-full bg-white transition ${
-                          includeCharacter ? "translate-x-7" : "translate-x-0"
-                        }`}
-                      />
-                    </button>
-                  </label>
-                </div>
-
-                <div className="flex flex-wrap gap-3">
-                  <button
-                    type="button"
-                    onClick={handlePromptRequest}
-                    disabled={isGeneratingPrompt}
-                    className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:brightness-110 disabled:opacity-50"
-                  >
-                    {isGeneratingPrompt ? "Building prompt..." : "Generate prompt"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleGenerateImage}
-                    disabled={isGeneratingImage}
-                    className="inline-flex items-center justify-center rounded-full border border-[var(--color-accent)] bg-[var(--color-accent)]/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--color-accent)]/30 disabled:opacity-50"
-                  >
-                    {isGeneratingImage ? "Generating..." : "Generate image"}
-                  </button>
-                  <span className="text-xs text-white/60">
-                    Uses Google nano banana pro (mocked locally if no key set).
-                  </span>
-                </div>
-              </div>
-            </SectionCard>
-
-            <SectionCard
-              title="Prompt preview"
-              subtitle="We always bake in the BrainDrive palette, composition, and labels."
-            >
-              <div className="space-y-3 text-sm text-white/80">
-                <label className="block rounded-2xl border border-white/10 bg-[#0b162f]/80 p-3">
-                  <span className="text-xs uppercase tracking-[0.2em] text-white/60">
-                    Refined prompt (editable)
-                  </span>
-                  <textarea
-                    value={promptState.refinedPrompt}
-                    onChange={(e) =>
-                      setPromptState((prev) => ({
-                        ...prev,
-                        refinedPrompt: e.target.value,
-                        fullPrompt: e.target.value || prev.fullPrompt,
-                      }))
-                    }
-                    placeholder="Generate a prompt to edit it, or start typing."
-                    rows={5}
-                    className="mt-2 w-full rounded-xl border border-white/10 bg-[#0b162f]/50 px-3 py-2 text-sm text-white focus:border-[var(--color-accent)] focus:outline-none"
-                  />
-                </label>
-                <div className="rounded-2xl border border-white/5 bg-white/5 p-3 text-white/70">
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/60">
-                    Negative prompt
-                  </p>
-                  <textarea
-                    value={promptState.negativePrompt}
-                    onChange={(e) =>
-                      setPromptState((prev) => ({
-                        ...prev,
-                        negativePrompt: e.target.value,
-                      }))
-                    }
-                    rows={3}
-                    className="mt-2 w-full rounded-xl border border-white/10 bg-[#0b162f]/50 px-3 py-2 text-sm text-white focus:border-[var(--color-accent)] focus:outline-none"
-                  />
-                </div>
-              </div>
-            </SectionCard>
-
-            <SectionCard
-              title="Request edits"
-              subtitle="Tell us what to tweak; we will revise the last prompt and re-generate."
-            >
-              <div className="space-y-3">
+        <div className="flex flex-col gap-6">
+          <SectionCard
+            title="Describe the image"
+            subtitle="Give us the rough idea. The brand guardrails and composition hints are added automatically."
+          >
+            <div className="flex flex-col gap-4">
+              <label className="text-sm font-medium text-white/80">
+                Rough concept
                 <textarea
-                  value={editText}
-                  onChange={(e) => setEditText(e.target.value)}
-                  rows={3}
-                  className="w-full rounded-2xl border border-white/10 bg-[#0b162f]/70 px-4 py-3 text-sm text-white focus:border-[var(--color-accent)] focus:outline-none"
-                  placeholder="e.g. brighten the BrainDrive side and leave more negative space on the left."
+                  value={concept}
+                  onChange={(e) => setConcept(e.target.value)}
+                  className="mt-2 w-full rounded-2xl border border-white/10 bg-[#0b162f]/70 px-4 py-3 text-sm text-white shadow-inner shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] focus:border-[var(--color-accent)] focus:outline-none"
+                  rows={4}
+                  placeholder="e.g. blog hero about freedom vs big tech ai, side-by-side comparison"
                 />
-                <div className="flex flex-wrap gap-3">
+              </label>
+
+              <div className="grid gap-3 md:grid-cols-2">
+                <label className="flex flex-col text-sm font-medium text-white/80">
+                  Use case
+                  <select
+                    value={useCase}
+                    onChange={(e) =>
+                      setUseCase(e.target.value as BrainImageUseCase)
+                    }
+                    className="mt-2 w-full rounded-xl border border-white/10 bg-[#0b162f]/70 px-3 py-2 text-sm text-white focus:border-[var(--color-accent)] focus:outline-none"
+                  >
+                    {useCaseOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="mt-1 text-xs text-white/60">
+                    {
+                      useCaseOptions.find((option) => option.value === useCase)
+                        ?.description
+                    }
+                  </span>
+                </label>
+
+                <label className="flex min-h-[92px] items-center justify-between gap-4 rounded-xl border border-white/10 bg-[#0b162f]/70 px-4 py-4 text-sm font-medium text-white/80">
+                  <span className="leading-snug">
+                    Include BrainDrive Guide character
+                  </span>
                   <button
                     type="button"
-                    onClick={handleEdit}
-                    disabled={isEditing || images.length === 0}
-                    className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:opacity-50"
+                    onClick={() => setIncludeCharacter((prev) => !prev)}
+                    className={`flex h-9 w-16 items-center rounded-full border border-white/10 px-1 transition ${
+                      includeCharacter
+                        ? "bg-[var(--color-accent)]"
+                        : "bg-white/10"
+                    }`}
+                    aria-pressed={includeCharacter}
                   >
-                    {isEditing ? "Applying edits..." : "Apply edits & regenerate"}
+                    <span
+                      className={`inline-block h-7 w-7 rounded-full bg-white transition ${
+                        includeCharacter ? "translate-x-7" : "translate-x-0"
+                      }`}
+                    />
                   </button>
-                  <span className="text-xs text-white/60">
-                    Select an image first to guide edits (defaults to the latest).
-                  </span>
-                </div>
+                </label>
               </div>
-            </SectionCard>
-          </div>
 
-          <div className="space-y-4">
-            <div className="flex items-center justify-between gap-2">
-              <h2 className="text-lg font-semibold text-white">
-                Generated images
-              </h2>
-              {images.length ? (
-                <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-white/70">
-                  Click a card to select. {images.length} shown.
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={handlePromptRequest}
+                  disabled={isGeneratingPrompt}
+                  className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:brightness-110 disabled:opacity-50"
+                >
+                  {isGeneratingPrompt ? "Building prompt..." : "Generate prompt"}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleGenerateImage}
+                  disabled={isGeneratingImage}
+                  className="inline-flex items-center justify-center rounded-full border border-[var(--color-accent)] bg-[var(--color-accent)]/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--color-accent)]/30 disabled:opacity-50"
+                >
+                  {isGeneratingImage ? "Generating..." : "Generate image"}
+                </button>
+                <span className="text-xs text-white/60">
+                  Uses Google nano banana pro (mocked locally if no key set).
                 </span>
-              ) : null}
+              </div>
             </div>
+          </SectionCard>
 
+          <SectionCard
+            title="Prompt preview"
+            subtitle="We always bake in the BrainDrive palette, composition, and labels."
+          >
+            <div className="space-y-3 text-sm text-white/80">
+              <label className="block rounded-2xl border border-white/10 bg-[#0b162f]/80 p-3">
+                <span className="text-xs uppercase tracking-[0.2em] text-white/60">
+                  Refined prompt (editable)
+                </span>
+                <textarea
+                  value={promptState.refinedPrompt}
+                  onChange={(e) =>
+                    setPromptState((prev) => ({
+                      ...prev,
+                      refinedPrompt: e.target.value,
+                      fullPrompt: e.target.value || prev.fullPrompt,
+                    }))
+                  }
+                  placeholder="Generate a prompt to edit it, or start typing."
+                  rows={5}
+                  className="mt-2 w-full rounded-xl border border-white/10 bg-[#0b162f]/50 px-3 py-2 text-sm text-white focus:border-[var(--color-accent)] focus:outline-none"
+                />
+              </label>
+              <div className="rounded-2xl border border-white/5 bg-white/5 p-3 text-white/70">
+                <p className="text-xs uppercase tracking-[0.2em] text-white/60">
+                  Negative prompt
+                </p>
+                <textarea
+                  value={promptState.negativePrompt}
+                  onChange={(e) =>
+                    setPromptState((prev) => ({
+                      ...prev,
+                      negativePrompt: e.target.value,
+                    }))
+                  }
+                  rows={3}
+                  className="mt-2 w-full rounded-xl border border-white/10 bg-[#0b162f]/50 px-3 py-2 text-sm text-white focus:border-[var(--color-accent)] focus:outline-none"
+                />
+              </div>
+            </div>
+          </SectionCard>
+
+          <SectionCard
+            title="Generated images"
+            subtitle="Click a card to select; selection guides edits. Mock art shows if the image API key is missing."
+          >
             <div className="grid gap-4 md:grid-cols-2">
               {isGeneratingImage || isEditing ? (
                 Array.from({ length: 4 }).map((_, idx) => (
@@ -492,7 +454,35 @@ export default function ImageStudioPage() {
                 </div>
               )}
             </div>
-          </div>
+          </SectionCard>
+
+          <SectionCard
+            title="Request edits"
+            subtitle="Tell us what to tweak; we will revise the last prompt and re-generate."
+          >
+            <div className="space-y-3">
+              <textarea
+                value={editText}
+                onChange={(e) => setEditText(e.target.value)}
+                rows={3}
+                className="w-full rounded-2xl border border-white/10 bg-[#0b162f]/70 px-4 py-3 text-sm text-white focus:border-[var(--color-accent)] focus:outline-none"
+                placeholder="e.g. brighten the BrainDrive side and leave more negative space on the left."
+              />
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={handleEdit}
+                  disabled={isEditing || images.length === 0}
+                  className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:opacity-50"
+                >
+                  {isEditing ? "Applying edits..." : "Apply edits & regenerate"}
+                </button>
+                <span className="text-xs text-white/60">
+                  Select an image first to guide edits (defaults to the latest).
+                </span>
+              </div>
+            </div>
+          </SectionCard>
         </div>
 
         {error ? (
