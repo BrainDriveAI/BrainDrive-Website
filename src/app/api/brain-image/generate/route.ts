@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     }
 
     const resolvedPrompt =
-      fullPrompt || buildImagePrompt(concept, useCase, includeCharacter);
+      fullPrompt || (concept ? buildImagePrompt(concept, useCase, includeCharacter) : '');
 
     const aspectRatio = aspectRatioForUseCase(useCase);
     const count =
