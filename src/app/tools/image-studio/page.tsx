@@ -41,8 +41,8 @@ export default function ImageStudioPage() {
 
       if (!response.ok) {
         const message =
-          data?.error ||
           data?.details ||
+          data?.error ||
           response.statusText ||
           'Unknown error while generating the prompt.';
         throw new Error(message);
@@ -82,8 +82,8 @@ export default function ImageStudioPage() {
 
       if (!response.ok) {
         const message =
-          data?.error ||
           data?.details ||
+          data?.error ||
           response.statusText ||
           'Unknown error while generating the image.';
         throw new Error(message);
