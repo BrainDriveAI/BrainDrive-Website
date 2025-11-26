@@ -37,12 +37,12 @@ export default function ImageStudioPage() {
         body: JSON.stringify({ concept, useCase, includeCharacter }),
       });
 
-      const data = (await response.json().catch(() => null)) as { refinedPrompt?: string } & ApiError | null;
+      const data = (await response.json().catch(() => null)) as (ApiError & { refinedPrompt?: string }) | null;
 
       if (!response.ok) {
         const message =
-          (data?.error as string | undefined) ||
-          (data?.details as string | undefined) ||
+          data?.error ||
+          data?.details ||
           response.statusText ||
           'Unknown error while generating the prompt.';
         throw new Error(message);
@@ -78,15 +78,12 @@ export default function ImageStudioPage() {
         body: JSON.stringify({ prompt: refinedPrompt, useCase, includeCharacter }),
       });
 
-      const data = (await response.json().catch(() => null)) as
-        | { images?: BrainImageResult[] }
-        | (ApiError & { images?: BrainImageResult[] })
-        | null;
+      const data = (await response.json().catch(() => null)) as (ApiError & { images?: BrainImageResult[] }) | null;
 
       if (!response.ok) {
         const message =
-          (data?.error as string | undefined) ||
-          (data?.details as string | undefined) ||
+          data?.error ||
+          data?.details ||
           response.statusText ||
           'Unknown error while generating the image.';
         throw new Error(message);
