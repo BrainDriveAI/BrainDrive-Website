@@ -3,6 +3,7 @@
 import { NextResponse } from 'next/server';
 import {
   aspectRatioForUseCase,
+  buildEditedPrompt,
   defaultUseCase,
   editPromptWithLLM,
   isBrainImageUseCase,
@@ -34,25 +35,31 @@ export async function POST(request: Request) {
     const useCase = isBrainImageUseCase(body.useCase) ? body.useCase : defaultUseCase;
     const includeCharacter = typeof body.includeCharacter === 'boolean' ? body.includeCharacter : true;
 
-    const updatedPrompt = await editPromptWithLLM({
-      previousPrompt,
-      editInstruction,
-      useCase,
-      includeCharacter,
-    });
+    const updatedPrompt =
+      (await editPromptWithLLM({
+        previousPrompt,
+        editInstruction,
+        useCase,
+        includeCharacter,
+      })) ??
+      buildEditedPrompt({
+        previousPrompt,
+        editInstruction,
+        useCase,
+        includeCharacter,
+      });
 
     if (!updatedPrompt) {
-      return NextResponse.json({ error: 'Failed to generate edited prompt.' }, { status: 500 });
+      return NextResponse.json(
+        { error: 'Failed to generate edited prompt.', details: 'No prompt returned from LLM or fallback builder.' },
+        { status: 500 },
+      );
     }
 
     const aspectRatio = aspectRatioForUseCase(useCase);
     const count = typeof body.count === 'number' && body.count > 0 && body.count < 5 ? Math.floor(body.count) : 2;
 
-    const { images, provider } = await generateNanoBananaImages({
-      prompt: updatedPrompt,
-      aspectRatio,
-      count,
-    });
+    const { images, provider } = await generateNanoBananaImages({ prompt: updatedPrompt, aspectRatio, count });
 
     return NextResponse.json({
       images,
