@@ -117,6 +117,30 @@ export default function ImageStudioPage() {
                 />
               </button>
             </div>
+
+            <div className="border-t border-white/10" />
+
+            <button
+              onClick={handleGeneratePrompt}
+              disabled={isGeneratingPrompt || !concept}
+              className="flex h-12 items-center justify-center rounded-lg bg-blue-600 px-6 text-lg font-semibold text-white shadow-lg transition-all hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {isGeneratingPrompt ? 'Generating...' : 'Generate Prompt'}
+            </button>
+
+            {refinedPrompt && (
+              <div className="flex flex-col gap-4">
+                <label htmlFor="refined-prompt" className="text-sm font-medium text-white/80">
+                  Refined Prompt
+                </label>
+                <textarea
+                  id="refined-prompt"
+                  value={refinedPrompt}
+                  readOnly
+                  className="min-h-[150px] w-full rounded-lg border border-white/10 bg-[#03050A] p-3 text-sm text-white/70 focus:border-white/30 focus:ring-2 focus:ring-white/20"
+                />
+              </div>
+            )}
           </div>
 
           {/* Right Panel: Generated Images */}
