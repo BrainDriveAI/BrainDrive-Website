@@ -21,20 +21,30 @@ export async function generateNanoBananaImages(
   request: NanoBananaRequest,
 ): Promise<{ images: BrainImageResult[]; provider: string }> {
   const apiKey = process.env.NANO_BANANA_API_KEY;
+  const apiUrl =
+    process.env.NANO_BANANA_API_URL ??
+    'https://api.nanobanana.dev/v1/images/generations';
+
   if (!apiKey) {
     throw new Error('Missing NANO_BANANA_API_KEY. Add it to your environment to generate images.');
   }
 
-  const response = await fetch('https://api.nanobanana.dev/v1/images/generations', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-    body: JSON.stringify({
-      prompt: request.prompt,
-      aspect_ratio: request.aspectRatio,
-      n: request.count,
-      model: 'nano-banana-pro',
-    }),
-  });
+  let response: Response;
+  try {
+    response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify({
+        prompt: request.prompt,
+        aspect_ratio: request.aspectRatio,
+        n: request.count,
+        model: 'nano-banana-pro',
+      }),
+    });
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : 'Unknown network error';
+    throw new Error(`Failed to reach Nano Banana API at ${apiUrl}: ${reason}`);
+  }
 
   if (!response.ok) {
     const errorBody = await response.text();
