@@ -6,12 +6,20 @@ import SiteHeader from '@/components/SiteHeader';
 
 type UseCase = 'blog-hero' | 'in-article' | 'video-side-graphic' | 'social-tile';
 
+type GeneratedImage = {
+  id: string;
+  url: string;
+  seed: number;
+};
+
 export default function ImageStudioPage() {
   const [concept, setConcept] = useState('');
   const [useCase, setUseCase] = useState<UseCase>('blog-hero');
   const [includeCharacter, setIncludeCharacter] = useState(true);
 
   const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false);
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+  const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
   const [refinedPrompt, setRefinedPrompt] = useState<string | null>(null);
 
   const handleGeneratePrompt = async () => {
@@ -22,6 +30,7 @@ export default function ImageStudioPage() {
 
     setIsGeneratingPrompt(true);
     setRefinedPrompt(null);
+    setGeneratedImages([]);
 
     try {
       const response = await fetch('/api/brain-image/prompt', {
@@ -41,6 +50,36 @@ export default function ImageStudioPage() {
       alert('There was an error generating the prompt. Please check the console for details.');
     } finally {
       setIsGeneratingPrompt(false);
+    }
+  };
+
+  const handleGenerateImage = async () => {
+    if (!refinedPrompt) {
+      alert('Please generate a prompt first.');
+      return;
+    }
+
+    setIsGeneratingImage(true);
+    setGeneratedImages([]);
+
+    try {
+      const response = await fetch('/api/brain-image/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: refinedPrompt, useCase }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setGeneratedImages(data.images);
+    } catch (error) {
+      console.error('Failed to generate image:', error);
+      alert('There was an error generating the image. Please check the console for details.');
+    } finally {
+      setIsGeneratingImage(false);
     }
   };
 
@@ -90,7 +129,7 @@ export default function ImageStudioPage() {
                 className="w-full rounded-lg border border-white/10 bg-[#03050A] p-3 text-white/90 focus:border-white/30 focus:ring-2 focus:ring-white/20"
               >
                 <option value="blog-hero">Blog hero (16:9)</option>
-                <option value="in-article">In-article graphic (16:9)</option>
+                <option value="in-article-graphic">In-article graphic (16:9)</option>
                 <option value="video-side-graphic">Video side graphic (16:9 with safe left side)</option>
                 <option value="social-tile">Social tile (square)</option>
               </select>
@@ -139,6 +178,13 @@ export default function ImageStudioPage() {
                   readOnly
                   className="min-h-[150px] w-full rounded-lg border border-white/10 bg-[#03050A] p-3 text-sm text-white/70 focus:border-white/30 focus:ring-2 focus:ring-white/20"
                 />
+                <button
+                  onClick={handleGenerateImage}
+                  disabled={isGeneratingImage}
+                  className="flex h-12 items-center justify-center rounded-lg bg-green-600 px-6 text-lg font-semibold text-white shadow-lg transition-all hover:bg-green-500 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {isGeneratingImage ? 'Generating...' : 'Generate Image'}
+                </button>
               </div>
             )}
           </div>
@@ -146,9 +192,37 @@ export default function ImageStudioPage() {
           {/* Right Panel: Generated Images */}
           <div className="flex flex-col gap-6 rounded-2xl bg-[#0A152A]/50 p-6 ring-1 ring-white/10">
             <h2 className="text-xl font-semibold">2. Generated Images</h2>
-            <div className="flex h-full min-h-[300px] items-center justify-center rounded-lg border-2 border-dashed border-white/10 bg-[#03050A]">
-              <p className="text-white/50">Images will appear here</p>
-            </div>
+            {isGeneratingImage ? (
+              <div className="flex h-full min-h-[300px] items-center justify-center rounded-lg border-2 border-dashed border-white/10 bg-[#03050A]">
+                <div className="flex flex-col items-center gap-2">
+                  <svg
+                    className="h-8 w-8 animate-spin text-white/50"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  <p className="text-white/50">Generating images...</p>
+                </div>
+              </div>
+            ) : generatedImages.length > 0 ? (
+              <div className="grid grid-cols-1 gap-4">
+                {generatedImages.map((image) => (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img key={image.id} src={image.url} alt={refinedPrompt || 'Generated image'} className="rounded-lg" />
+                ))}
+              </div>
+            ) : (
+              <div className="flex h-full min-h-[300px] items-center justify-center rounded-lg border-2 border-dashed border-white/10 bg-[#03050A]">
+                <p className="text-white/50">Images will appear here</p>
+              </div>
+            )}
           </div>
         </div>
       </main>
