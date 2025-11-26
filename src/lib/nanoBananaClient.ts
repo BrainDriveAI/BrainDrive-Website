@@ -42,12 +42,33 @@ function parseImagesFromResponse(data: unknown): BrainImageResult[] {
   return candidates
     .map((candidate, index) => {
       const entry = candidate as Record<string, unknown>;
+      const content = (entry.content ?? entry) as
+        | { parts?: Array<Record<string, unknown>> }
+        | Record<string, unknown>
+        | undefined;
+
+      const parts = Array.isArray((content as { parts?: unknown }).parts)
+        ? ((content as { parts?: unknown }).parts as Array<
+            Record<string, unknown>
+          >)
+        : [];
+
+      const inlineDataPart = parts.find(
+        (p) => (p as { inline_data?: unknown }).inline_data
+      ) as { inline_data?: { data?: string; mime_type?: string } } | undefined;
+
+      const urlFromInline =
+        inlineDataPart?.inline_data?.data &&
+        inlineDataPart.inline_data.mime_type
+          ? `data:${inlineDataPart.inline_data.mime_type};base64,${inlineDataPart.inline_data.data}`
+          : null;
+
       const url =
         typeof entry.url === "string"
           ? entry.url
           : typeof entry.image === "string"
             ? entry.image
-            : null;
+            : urlFromInline;
 
       if (!url) return null;
 
@@ -60,7 +81,10 @@ function parseImagesFromResponse(data: unknown): BrainImageResult[] {
         promptUsed:
           typeof entry.prompt === "string"
             ? entry.prompt
-            : "BrainDrive image prompt",
+            : typeof (entry as { input_prompt?: unknown }).input_prompt ===
+                "string"
+              ? ((entry as { input_prompt?: string }).input_prompt as string)
+              : "BrainDrive image prompt",
         createdAt: new Date().toISOString(),
         provider: "nano-banana",
       };
@@ -71,8 +95,13 @@ function parseImagesFromResponse(data: unknown): BrainImageResult[] {
 export async function generateNanoBananaImages(
   params: GenerateImageParams
 ): Promise<{ images: BrainImageResult[]; provider: string }> {
-  const apiKey = process.env.NANO_BANANA_API_KEY;
+  const apiKey =
+    process.env.NANO_BANANA_API_KEY ?? process.env.GEMINI_API_KEY;
   const count = params.count ?? 4;
+  const model =
+    params.model ??
+    process.env.NANO_BANANA_MODEL ??
+    "gemini-3-pro-image-preview";
 
   if (!apiKey) {
     return { images: buildMockImages(params.prompt, count), provider: "mock" };
@@ -80,14 +109,24 @@ export async function generateNanoBananaImages(
 
   const endpoint =
     process.env.NANO_BANANA_API_URL ??
-    "https://generativelanguage.googleapis.com/v1beta/models/imagegeneration:generate";
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
   const payload = {
-    prompt: params.prompt,
-    aspectRatio: params.aspectRatio ?? "16:9",
-    model: params.model ?? "nano-banana-pro",
+    contents: [
+      {
+        role: "user",
+        parts: [{ text: params.prompt }],
+      },
+    ],
+    response_modalities: ["IMAGE"],
+    generation_config: {
+      response_mime_type: "image/png",
+    },
+    image_generation_config: {
+      aspect_ratio: params.aspectRatio ?? "16:9",
+    },
+    candidate_count: count,
     seed: params.seed,
-    numImages: count,
   };
 
   try {
@@ -100,8 +139,9 @@ export async function generateNanoBananaImages(
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
       throw new Error(
-        `Nano banana API responded with status ${response.status}`
+        `Nano banana API responded with status ${response.status}: ${errorText}`
       );
     }
 

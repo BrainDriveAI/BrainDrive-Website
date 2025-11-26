@@ -68,7 +68,10 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Error generating BrainDrive images", error);
     return NextResponse.json(
-      { error: "Unable to generate images right now." },
+      {
+        error:
+          "Unable to generate images right now. If you recently added the nano banana key, double-check the endpoint and model.",
+      },
       { status: 500 }
     );
   }

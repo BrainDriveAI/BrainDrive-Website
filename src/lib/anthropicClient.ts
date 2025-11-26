@@ -17,7 +17,8 @@ export async function callAnthropicForText(
 
   const endpoint =
     process.env.ANTHROPIC_API_URL ?? "https://api.anthropic.com/v1/messages";
-  const model = process.env.ANTHROPIC_MODEL ?? "claude-3-5-sonnet-latest";
+  const model =
+    process.env.ANTHROPIC_MODEL ?? "claude-3-5-sonnet-20241022";
 
   const body = {
     model,
