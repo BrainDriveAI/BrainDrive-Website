@@ -43,3 +43,36 @@ export const brainImageStyle = {
     examples: ['Ownership', 'Freedom', 'Big Tech', 'Plugins', 'Core', 'Privacy'],
   },
 };
+
+export const brandStyleSummary = [
+  'Dark-mode first with deep/midnight blues and clean vector/line-art style.',
+  'Use simple visual metaphors (blocks, tiles, flows, side-by-side comparisons).',
+  'Keep images minimal, warm, human, with clear structure.',
+  'No corporate stock photo people.',
+  'No neon rainbow chaos; keep palette restrained.',
+  'Include the BrainDrive Guide character: a realistic cartoon geeky builder, friendly, with a casual hoodie or t-shirt and jeans.',
+];
+
+export type BrainImageUseCase = 'blog-hero' | 'in-article-graphic' | 'video-side-graphic' | 'social-tile';
+
+export const useCasePresets: Record<
+  BrainImageUseCase,
+  { aspectRatio: string; promptHint: string }
+> = {
+  'blog-hero': {
+    aspectRatio: '16:9',
+    promptHint: 'A wide, cinematic blog hero image that is visually interesting and sets a strong tone.',
+  },
+  'in-article-graphic': {
+    aspectRatio: '16:9',
+    promptHint: 'A clear, explanatory graphic to be used within an article to illustrate a point.',
+  },
+  'video-side-graphic': {
+    aspectRatio: '16:9',
+    promptHint: 'A graphic for a video side-panel. The main subject should be on the right, leaving clear space on the left for text overlays.',
+  },
+  'social-tile': {
+    aspectRatio: '1:1',
+    promptHint: 'A square, eye-catching social media tile with a single, clear focal point.',
+  },
+};
