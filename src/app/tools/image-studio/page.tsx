@@ -9,6 +9,11 @@ import type { BrainImageResult } from '@/lib/brainImage';
 const defaultUseCase: BrainImageUseCase = 'blog-hero';
 
 type ApiError = { error?: string; details?: string };
+type StudioImage = BrainImageResult & {
+  label: string;
+  generationType: 'original' | 'edit';
+  parentId?: string;
+};
 
 export default function ImageStudioPage() {
   const [concept, setConcept] = useState('');
@@ -17,8 +22,11 @@ export default function ImageStudioPage() {
 
   const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
-  const [generatedImages, setGeneratedImages] = useState<BrainImageResult[]>([]);
+  const [isEditingImage, setIsEditingImage] = useState(false);
+  const [generatedImages, setGeneratedImages] = useState<StudioImage[]>([]);
   const [refinedPrompt, setRefinedPrompt] = useState<string | null>(null);
+  const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
+  const [editInstruction, setEditInstruction] = useState('');
 
   const handleGeneratePrompt = async () => {
     if (!concept) {
@@ -70,6 +78,7 @@ export default function ImageStudioPage() {
 
     setIsGeneratingImage(true);
     setGeneratedImages([]);
+    setSelectedImageId(null);
 
     try {
       const response = await fetch('/api/brain-image/generate', {
@@ -89,17 +98,102 @@ export default function ImageStudioPage() {
         throw new Error(message);
       }
 
-      if (!data?.images) {
+      const images = data?.images;
+      if (!images || images.length === 0) {
         throw new Error('Image API did not return any images.');
       }
 
-      setGeneratedImages(data.images);
+      const mapped = images.map((img, idx) => ({
+        ...img,
+        label: images.length > 1 ? `Original ${idx + 1}` : 'Original',
+        generationType: 'original' as const,
+      }));
+
+      setGeneratedImages(mapped);
+      if (mapped[0]) {
+        setSelectedImageId(mapped[0].id);
+      }
     } catch (error) {
       console.error('Failed to generate image:', error);
       const message = error instanceof Error ? error.message : 'There was an error generating the image.';
       alert(message);
     } finally {
       setIsGeneratingImage(false);
+    }
+  };
+
+  const handleEditImage = async () => {
+    const trimmedInstruction = editInstruction.trim();
+    if (!selectedImageId) {
+      alert('Select an image to edit first.');
+      return;
+    }
+    if (!trimmedInstruction) {
+      alert('Describe what you want to change.');
+      return;
+    }
+
+    const sourceImage = generatedImages.find((img) => img.id === selectedImageId);
+    if (!sourceImage) {
+      alert('Selected image not found.');
+      return;
+    }
+
+    setIsEditingImage(true);
+
+    try {
+      const response = await fetch('/api/brain-image/edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          previousPrompt: sourceImage.promptUsed,
+          editInstruction: trimmedInstruction,
+          useCase,
+          includeCharacter,
+        }),
+      });
+
+      const data = (await response.json().catch(() => null)) as
+        | (ApiError & { images?: BrainImageResult[]; updatedPrompt?: string; previousPrompt?: string })
+        | null;
+
+      if (!response.ok) {
+        const message = data?.details || data?.error || response.statusText || 'Unknown error while editing the image.';
+        throw new Error(message);
+      }
+
+      const images = data?.images;
+      if (!images || images.length === 0) {
+        throw new Error('Edit API did not return any images.');
+      }
+
+      const editCount = generatedImages.filter((img) => img.generationType === 'edit').length;
+      const now = Date.now();
+
+      const mapped = images.map((img, idx) => ({
+        ...img,
+        label: images.length > 1 ? `Edit ${editCount + idx + 1}` : `Edit ${editCount + 1}`,
+        generationType: 'edit' as const,
+        parentId: sourceImage.id,
+        // Spread prompt info from response when available
+        promptUsed: data.updatedPrompt ?? img.promptUsed ?? sourceImage.promptUsed,
+        createdAt: img.createdAt || new Date(now).toISOString(),
+      }));
+
+      setGeneratedImages((prev) => [...prev, ...mapped]);
+      if (mapped[0]) {
+        setSelectedImageId(mapped[0].id);
+        if (data?.updatedPrompt) {
+          setRefinedPrompt(data.updatedPrompt);
+        }
+      }
+      setEditInstruction('');
+    } catch (error) {
+      console.error('Failed to edit image:', error);
+      const message = error instanceof Error ? error.message : 'There was an error editing the image.';
+      alert(message);
+    } finally {
+      setIsEditingImage(false);
     }
   };
 
@@ -195,7 +289,7 @@ export default function ImageStudioPage() {
                 <textarea
                   id="refined-prompt"
                   value={refinedPrompt}
-                  readOnly
+                  onChange={(e) => setRefinedPrompt(e.target.value)}
                   className="min-h-[150px] w-full rounded-lg border border-white/10 bg-[#03050A] p-3 text-sm text-white/70 focus:border-white/30 focus:ring-2 focus:ring-white/20"
                 />
                 <button
@@ -233,10 +327,26 @@ export default function ImageStudioPage() {
               </div>
             ) : generatedImages.length > 0 ? (
               <div className="grid grid-cols-1 gap-4">
-                {generatedImages.map((image) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img key={image.id} src={image.url} alt={refinedPrompt || 'Generated image'} className="rounded-lg" />
-                ))}
+                {generatedImages.map((image) => {
+                  const isSelected = selectedImageId === image.id;
+                  return (
+                    <button
+                      key={image.id}
+                      type="button"
+                      onClick={() => setSelectedImageId(image.id)}
+                      className={`group flex w-full flex-col overflow-hidden rounded-lg border ${
+                        isSelected ? 'border-green-400 ring-2 ring-green-500/40' : 'border-white/10'
+                      } bg-[#03050A] text-left transition hover:border-white/30`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={image.url} alt={refinedPrompt || 'Generated image'} className="w-full object-cover" />
+                      <div className="flex items-center justify-between px-3 py-2 text-xs text-white/70">
+                        <span className="font-semibold text-white/80">{image.label}</span>
+                        <span className="text-white/50">{image.generationType === 'edit' ? 'Edited' : 'Original'}</span>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             ) : (
               <div className="flex h-full min-h-[300px] items-center justify-center rounded-lg border-2 border-dashed border-white/10 bg-[#03050A]">
@@ -245,6 +355,34 @@ export default function ImageStudioPage() {
             )}
           </div>
         </div>
+
+        {generatedImages.length > 0 && (
+          <div className="mt-10 grid grid-cols-1 gap-6 rounded-2xl bg-[#0A152A]/50 p-6 ring-1 ring-white/10">
+            <h2 className="text-xl font-semibold">3. Request edits</h2>
+            <p className="text-white/60">
+              Select an image above, describe what to change, and we’ll generate a new version without replacing the
+              original.
+            </p>
+            <textarea
+              value={editInstruction}
+              onChange={(e) => setEditInstruction(e.target.value)}
+              placeholder="e.g., make the background darker and add a small lock icon near the user data block."
+              className="min-h-[100px] w-full rounded-lg border border-white/10 bg-[#03050A] p-3 text-white/90 focus:border-white/30 focus:ring-2 focus:ring-white/20"
+            />
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={handleEditImage}
+                disabled={isEditingImage}
+                className="flex h-12 items-center justify-center rounded-lg bg-purple-600 px-6 text-lg font-semibold text-white shadow-lg transition-all hover:bg-purple-500 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {isEditingImage ? 'Generating edit...' : 'Generate edit'}
+              </button>
+              <span className="text-sm text-white/60">
+                Currently selected: {selectedImageId ? generatedImages.find((img) => img.id === selectedImageId)?.label : 'None'}
+              </span>
+            </div>
+          </div>
+        )}
       </main>
 
       <SiteFooter />

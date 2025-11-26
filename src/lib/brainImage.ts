@@ -52,7 +52,7 @@ export function buildImagePrompt(
   const characterLine = includeCharacter
     ? `Include the BrainDrive Guide: ${character.description}`
     : "Do not include any human character; focus on abstract but clear metaphor.";
-  
+sd  
   const promptParts = [
     'Dark-mode marketing illustration for BrainDrive, an open-source, user-owned AI system.',
     `Style: ${personality.adjectives.join(', ')}; minimal, warm, human.`,
