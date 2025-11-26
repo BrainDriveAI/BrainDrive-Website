@@ -3,23 +3,21 @@
 import { useState } from 'react';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
+import type { BrainImageUseCase } from '@/config/brainImageStyle';
+import type { BrainImageResult } from '@/lib/brainImage';
 
-type UseCase = 'blog-hero' | 'in-article' | 'video-side-graphic' | 'social-tile';
+const defaultUseCase: BrainImageUseCase = 'blog-hero';
 
-type GeneratedImage = {
-  id: string;
-  url: string;
-  seed: number;
-};
+type ApiError = { error?: string; details?: string };
 
 export default function ImageStudioPage() {
   const [concept, setConcept] = useState('');
-  const [useCase, setUseCase] = useState<UseCase>('blog-hero');
+  const [useCase, setUseCase] = useState<BrainImageUseCase>(defaultUseCase);
   const [includeCharacter, setIncludeCharacter] = useState(true);
 
   const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
-  const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
+  const [generatedImages, setGeneratedImages] = useState<BrainImageResult[]>([]);
   const [refinedPrompt, setRefinedPrompt] = useState<string | null>(null);
 
   const handleGeneratePrompt = async () => {
@@ -39,15 +37,26 @@ export default function ImageStudioPage() {
         body: JSON.stringify({ concept, useCase, includeCharacter }),
       });
 
+      const data = (await response.json().catch(() => null)) as { refinedPrompt?: string } & ApiError | null;
+
       if (!response.ok) {
-        throw new Error(`API error: ${response.statusText}`);
+        const message =
+          (data?.error as string | undefined) ||
+          (data?.details as string | undefined) ||
+          response.statusText ||
+          'Unknown error while generating the prompt.';
+        throw new Error(message);
       }
 
-      const data = await response.json();
+      if (!data?.refinedPrompt) {
+        throw new Error('Prompt API did not return a prompt.');
+      }
+
       setRefinedPrompt(data.refinedPrompt);
     } catch (error) {
       console.error('Failed to generate prompt:', error);
-      alert('There was an error generating the prompt. Please check the console for details.');
+      const message = error instanceof Error ? error.message : 'There was an error generating the prompt.';
+      alert(message);
     } finally {
       setIsGeneratingPrompt(false);
     }
@@ -66,18 +75,32 @@ export default function ImageStudioPage() {
       const response = await fetch('/api/brain-image/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: refinedPrompt, useCase }),
+        body: JSON.stringify({ prompt: refinedPrompt, useCase, includeCharacter }),
       });
 
+      const data = (await response.json().catch(() => null)) as
+        | { images?: BrainImageResult[] }
+        | (ApiError & { images?: BrainImageResult[] })
+        | null;
+
       if (!response.ok) {
-        throw new Error(`API error: ${response.statusText}`);
+        const message =
+          (data?.error as string | undefined) ||
+          (data?.details as string | undefined) ||
+          response.statusText ||
+          'Unknown error while generating the image.';
+        throw new Error(message);
       }
 
-      const data = await response.json();
+      if (!data?.images) {
+        throw new Error('Image API did not return any images.');
+      }
+
       setGeneratedImages(data.images);
     } catch (error) {
       console.error('Failed to generate image:', error);
-      alert('There was an error generating the image. Please check the console for details.');
+      const message = error instanceof Error ? error.message : 'There was an error generating the image.';
+      alert(message);
     } finally {
       setIsGeneratingImage(false);
     }
@@ -125,7 +148,7 @@ export default function ImageStudioPage() {
               <select
                 id="use-case"
                 value={useCase}
-                onChange={(e) => setUseCase(e.target.value as UseCase)}
+                onChange={(e) => setUseCase(e.target.value as BrainImageUseCase)}
                 className="w-full rounded-lg border border-white/10 bg-[#03050A] p-3 text-white/90 focus:border-white/30 focus:ring-2 focus:ring-white/20"
               >
                 <option value="blog-hero">Blog hero (16:9)</option>

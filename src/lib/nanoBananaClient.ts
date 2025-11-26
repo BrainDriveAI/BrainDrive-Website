@@ -22,7 +22,7 @@ export async function generateNanoBananaImages(
 ): Promise<{ images: BrainImageResult[]; provider: string }> {
   const apiKey = process.env.NANO_BANANA_API_KEY;
   if (!apiKey) {
-    throw new Error('NANO_BANANA_API_KEY is not configured.');
+    throw new Error('Missing NANO_BANANA_API_KEY. Add it to your environment to generate images.');
   }
 
   const response = await fetch('https://api.nanobanana.dev/v1/images/generations', {
@@ -38,7 +38,9 @@ export async function generateNanoBananaImages(
 
   if (!response.ok) {
     const errorBody = await response.text();
-    throw new Error(`Nano Banana API Error: ${response.statusText} - ${errorBody}`);
+    const statusLabel = response.statusText || `status ${response.status}`;
+    const trimmedBody = errorBody.length > 400 ? `${errorBody.slice(0, 400)}…` : errorBody;
+    throw new Error(`Nano Banana API error (${statusLabel}): ${trimmedBody || 'no response body'}`);
   }
 
   const result: NanoBananaResponse = await response.json();

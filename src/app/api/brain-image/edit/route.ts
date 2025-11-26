@@ -65,10 +65,12 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error('Error editing BrainDrive image', error);
+    const details = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
       {
         error:
           'Unable to edit image right now. If you recently added the nano banana key, double-check the endpoint and model.',
+        details,
       },
       { status: 500 },
     );
