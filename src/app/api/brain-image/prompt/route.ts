@@ -52,7 +52,11 @@ Include BrainDrive Guide character: ${includeCharacter}
       temperature: 0.5,
     });
 
-    const refinedPrompt = msg.content[0].text;
+    const firstBlock = msg.content[0];
+    if (firstBlock.type !== 'text') {
+      throw new Error('Expected a text block from the Anthropic API, but did not receive one.');
+    }
+    const refinedPrompt = firstBlock.text;
 
     return NextResponse.json({ refinedPrompt });
   } catch (error) {
