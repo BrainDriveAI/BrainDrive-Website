@@ -38,7 +38,7 @@ export async function generateNanoBananaImages(
         generationConfig: {
           responseModalities: ['IMAGE'],
           imageConfig: { aspectRatio: request.aspectRatio },
-          candidateCount: request.count,
+          // The model does not support multiple candidates; omit candidateCount to default to 1.
         },
       }),
     });
