@@ -52,20 +52,20 @@ export function buildImagePrompt(
   const characterLine = includeCharacter
     ? `Include the BrainDrive Guide: ${character.description}`
     : "Do not include any human character; focus on abstract but clear metaphor.";
+  
+  const promptParts = [
+    'Dark-mode marketing illustration for BrainDrive, an open-source, user-owned AI system.',
+    `Style: ${personality.adjectives.join(', ')}; minimal, warm, human.`,
+    `Color palette: deep blue primary background (${palette.primaryBg}), midnight blue secondary (${palette.secondaryBg}), steel and sky blue accents (${palette.accent1}, ${palette.accent2}), light blue text/UI (${palette.accentText}), white CTAs (${palette.cta}).`,
+    `Composition: ${composition.guidance.join(' ')}`,
+    'Metaphor-first, one clear idea, 2-4 supporting elements max.',
+    `Allow short text labels when they clarify ideas (e.g., ${textLabels.examples.join(', ')}); keep labels minimal.`,
+    `Use case focus: ${useCaseHint}`,
+    `Concept: ${basePrompt}`,
+    characterLine,
+  ];
 
-  return `
-Dark-mode marketing illustration for BrainDrive, an open-source, user-owned AI system.
-Style: ${personality.adjectives.join(", ")}; minimal, warm, human.
-Color palette: deep blue primary background (${palette.primaryBg}), midnight blue secondary (${palette.secondaryBg}), steel and sky blue accents (${palette.accent1}, ${palette.accent2}), light blue text/UI (${palette.accentText}), white CTAs (${palette.cta}).
-Composition: ${composition.guidance.join(" ")}
-Metaphor-first, one clear idea, 2-4 supporting elements max.
-Allow short text labels when they clarify ideas (e.g., ${textLabels.examples.join(
-    ", "
-  )}); keep labels minimal.
-Use case focus: ${useCaseHint}
-Concept: ${basePrompt}
-${characterLine}
-`;
+  return promptParts.join(' ').replace(/\s+/g, ' ').trim();
 }
 
 export async function refineConceptToPrompt(
