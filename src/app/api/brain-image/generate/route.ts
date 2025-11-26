@@ -12,6 +12,7 @@ import { generateNanoBananaImages } from "@/lib/nanoBananaClient";
 
 type GenerateRequestBody = {
   concept?: string;
+  prompt?: string; // Accept 'prompt' as an alias for fullPrompt
   fullPrompt?: string;
   useCase?: BrainImageUseCase;
   includeCharacter?: boolean;
@@ -24,7 +25,8 @@ export async function POST(request: Request) {
       {}) as GenerateRequestBody;
 
     const fullPrompt =
-      typeof body.fullPrompt === "string" ? body.fullPrompt.trim() : "";
+      (typeof body.fullPrompt === 'string' ? body.fullPrompt.trim() : '') ||
+      (typeof body.prompt === 'string' ? body.prompt.trim() : '');
     const concept =
       typeof body.concept === "string" ? body.concept.trim() : "";
     const includeCharacter =
