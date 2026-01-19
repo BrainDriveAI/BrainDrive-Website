@@ -6,6 +6,8 @@ import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 const windowsInstallerLink =
   "https://github.com/BrainDriveAI/BrainDrive-Install-System/releases/latest/download/BrainDriveInstaller-win-x64.exe";
+const macInstallerLink =
+  "https://github.com/BrainDriveAI/BrainDrive-Install-System/releases/latest/download/BrainDriveInstaller.dmg";
 const linuxInstallGuideUrl = "https://docs.braindrive.ai/core/INSTALL";
 
 type OsOption = {
@@ -35,8 +37,8 @@ const osOptions: OsOption[] = [
   {
     id: "mac",
     name: "macOS",
-    ctaLabel: "Open Mac Install Guide",
-    ctaHref: linuxInstallGuideUrl,
+    ctaLabel: "Download for macOS",
+    ctaHref: macInstallerLink,
     icon: (props) => (
       <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
         <path
@@ -45,7 +47,6 @@ const osOptions: OsOption[] = [
         />
       </svg>
     ),
-    openInNewTab: true,
   },
   {
     id: "linux",
