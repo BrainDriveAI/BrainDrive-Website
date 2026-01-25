@@ -35,8 +35,8 @@ const osOptions: OsOption[] = [
   {
     id: "mac",
     name: "macOS",
-    ctaLabel: "Open Mac Install Guide",
-    ctaHref: linuxInstallGuideUrl,
+    ctaLabel: "Download for Mac Silicone",
+    ctaHref: "https://github.com/BrainDriveAI/BrainDrive-Install-System/releases/download/1.0.6/BrainDriveInstaller.dmg",
     icon: (props) => (
       <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
         <path
@@ -45,7 +45,6 @@ const osOptions: OsOption[] = [
         />
       </svg>
     ),
-    openInNewTab: true,
   },
   {
     id: "linux",
