@@ -46,8 +46,8 @@ export default function Home() {
               <Image
                 src="/hero-image.png"
                 alt="BrainDrive AI dashboard screenshot"
-                width={1536}
-                height={768}
+                width={3000}
+                height={1556}
                 className="h-auto w-full rounded-xl"
                 priority
               />
