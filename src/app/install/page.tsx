@@ -98,7 +98,7 @@ const osOptions: OsOption[] = [
 ];
 
 export default function InstallPage() {
-  const [activeOs, setActiveOs] = useState<string>(osOptions[0].id);
+  const [activeOs, setActiveOs] = useState<string>("mac");
   const selectedOption =
     osOptions.find((option) => option.id === activeOs) ?? osOptions[0];
 
